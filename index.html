@@ -12,86 +12,98 @@
 </head>
 <body class="bg-black text-white overflow-hidden">
 
-    <div id="app-container" class="relative w-full h-screen flex flex-col items-center justify-center p-4">
-        
-        <header class="absolute top-0 left-0 w-full flex justify-between items-center p-4 md:p-8 z-10">
-            <h1 class="text-xl md:text-3xl text-cyan-300 text-shadow">高达扭蛋机</h1>
-            <div class="flex items-center space-x-4">
-                <button id="shop-btn" class="pixel-button small-button">商店</button>
-                <button id="hangar-btn" class="pixel-button small-button">机库</button>
-                <button id="achievements-btn" class="pixel-button small-button">成就</button>
-                <button id="stats-btn" class="pixel-button small-button">统计</button>
-                <button id="settings-btn" class="pixel-button small-button">设置</button>
-                <div id="token-display" class="pixel-box text-lg md:text-2xl p-3 md:p-4 bg-black bg-opacity-50">
-                    代币: <span id="token-balance">1000</span>
-                </div>
+    <div id="app-container" class="relative w-full min-h-screen flex flex-col p-2 sm:p-4">
+
+        <!-- 移动端顶部导航 -->
+        <header class="w-full flex flex-col sm:flex-row justify-between items-center p-2 sm:p-4 md:p-6 z-10 space-y-2 sm:space-y-0">
+            <h1 class="text-lg sm:text-xl md:text-3xl text-cyan-300 text-shadow text-center sm:text-left">高达扭蛋机</h1>
+
+            <!-- 代币显示 - 移动端置顶 -->
+            <div id="token-display" class="pixel-box text-base sm:text-lg md:text-2xl p-2 sm:p-3 md:p-4 bg-black bg-opacity-50 order-first sm:order-last">
+                代币: <span id="token-balance">1000</span>
             </div>
         </header>
 
-        <main class="flex flex-col items-center justify-center">
-            <div id="gacha-machine" class="pixel-box p-4 mb-8">
-                 <img src="https://r2.flowith.net/files/o/1751696094800-rx-78-2_gundam_pixel_art_prize_pool_index_5@1024x1024.png" alt="Gacha Machine" class="w-64 h-64 md:w-80 md:h-80 object-contain pixel-art">
+        <!-- 移动端导航按钮 -->
+        <nav class="w-full flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 px-2 sm:px-4 mb-4">
+            <button id="shop-btn" class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">商店</button>
+            <button id="hangar-btn" class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">机库</button>
+            <button id="achievements-btn" class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">成就</button>
+            <button id="stats-btn" class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">统计</button>
+            <button id="settings-btn" class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">设置</button>
+        </nav>
+
+        <!-- 主游戏区域 -->
+        <main class="flex-1 flex flex-col items-center justify-center px-2 sm:px-4">
+            <!-- 高达机体展示 -->
+            <div id="gacha-machine" class="pixel-box p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 md:mb-8 w-full max-w-sm sm:max-w-md md:max-w-lg">
+                <img src="https://r2.flowith.net/files/o/1751696094800-rx-78-2_gundam_pixel_art_prize_pool_index_5@1024x1024.png"
+                     alt="Gacha Machine"
+                     class="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 object-contain pixel-art mx-auto">
             </div>
 
-            <div class="flex space-x-4">
-                <button id="single-pull-btn" class="pixel-button">
-                    <span class="cost">[100]</span> 单次抽取
+            <!-- 抽取按钮区域 -->
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 w-full max-w-md sm:max-w-lg">
+                <button id="single-pull-btn" class="pixel-button flex-1 py-3 sm:py-4 text-sm sm:text-base">
+                    <span class="cost text-xs sm:text-sm">[100]</span>
+                    <span class="block sm:inline">单次抽取</span>
                 </button>
-                <button id="ten-pull-btn" class="pixel-button">
-                    <span class="cost">[1000]</span> 十连抽取
+                <button id="ten-pull-btn" class="pixel-button flex-1 py-3 sm:py-4 text-sm sm:text-base">
+                    <span class="cost text-xs sm:text-sm">[1000]</span>
+                    <span class="block sm:inline">十连抽取</span>
                 </button>
             </div>
         </main>
 
         <!-- Result Modal -->
         <div id="result-modal" class="modal-overlay">
-            <div class="modal-content pixel-box w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
-                <button id="close-result-modal-btn" class="modal-close-btn">&times;</button>
+            <div class="modal-content pixel-box w-[95vw] sm:w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2">
+                <button id="close-result-modal-btn" class="modal-close-btn text-xl sm:text-2xl">&times;</button>
                 <div id="modal-body" class="w-full h-full"></div>
             </div>
         </div>
 
         <!-- Hangar Modal -->
         <div id="hangar-modal" class="modal-overlay">
-             <div class="modal-content pixel-box w-full max-w-5xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
-                <button id="close-hangar-modal-btn" class="modal-close-btn">&times;</button>
-                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">个人机库</h2>
+             <div class="modal-content pixel-box w-[95vw] sm:w-full max-w-5xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2">
+                <button id="close-hangar-modal-btn" class="modal-close-btn text-xl sm:text-2xl">&times;</button>
+                <h2 class="text-lg sm:text-2xl md:text-3xl text-cyan-300 text-shadow mb-4 sm:mb-6 text-center">个人机库</h2>
                 <div id="hangar-body" class="w-full h-full"></div>
             </div>
         </div>
 
         <!-- Stats Modal -->
         <div id="stats-modal" class="modal-overlay">
-            <div class="modal-content pixel-box w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
-                <button id="close-stats-modal-btn" class="modal-close-btn">&times;</button>
-                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">游戏统计</h2>
+            <div class="modal-content pixel-box w-[95vw] sm:w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2">
+                <button id="close-stats-modal-btn" class="modal-close-btn text-xl sm:text-2xl">&times;</button>
+                <h2 class="text-lg sm:text-2xl md:text-3xl text-cyan-300 text-shadow mb-4 sm:mb-6 text-center">游戏统计</h2>
                 <div id="stats-body" class="w-full h-full"></div>
             </div>
         </div>
 
         <!-- Shop Modal -->
         <div id="shop-modal" class="modal-overlay">
-            <div class="modal-content pixel-box w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
-                <button id="close-shop-modal-btn" class="modal-close-btn">&times;</button>
-                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">高达商店</h2>
+            <div class="modal-content pixel-box w-[95vw] sm:w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2">
+                <button id="close-shop-modal-btn" class="modal-close-btn text-xl sm:text-2xl">&times;</button>
+                <h2 class="text-lg sm:text-2xl md:text-3xl text-cyan-300 text-shadow mb-4 sm:mb-6 text-center">高达商店</h2>
                 <div id="shop-body" class="w-full h-full"></div>
             </div>
         </div>
 
         <!-- Achievements Modal -->
         <div id="achievements-modal" class="modal-overlay">
-            <div class="modal-content pixel-box w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
-                <button id="close-achievements-modal-btn" class="modal-close-btn">&times;</button>
-                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">成就系统</h2>
+            <div class="modal-content pixel-box w-[95vw] sm:w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2">
+                <button id="close-achievements-modal-btn" class="modal-close-btn text-xl sm:text-2xl">&times;</button>
+                <h2 class="text-lg sm:text-2xl md:text-3xl text-cyan-300 text-shadow mb-4 sm:mb-6 text-center">成就系统</h2>
                 <div id="achievements-body" class="w-full h-full"></div>
             </div>
         </div>
 
         <!-- Settings Modal -->
         <div id="settings-modal" class="modal-overlay">
-            <div class="modal-content pixel-box w-full max-w-2xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
-                <button id="close-settings-modal-btn" class="modal-close-btn">&times;</button>
-                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">游戏设置</h2>
+            <div class="modal-content pixel-box w-[95vw] sm:w-full max-w-2xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2">
+                <button id="close-settings-modal-btn" class="modal-close-btn text-xl sm:text-2xl">&times;</button>
+                <h2 class="text-lg sm:text-2xl md:text-3xl text-cyan-300 text-shadow mb-4 sm:mb-6 text-center">游戏设置</h2>
                 <div id="settings-body" class="w-full h-full">
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">

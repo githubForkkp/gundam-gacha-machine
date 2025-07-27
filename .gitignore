@@ -4,6 +4,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+RESPONSIVE_DESIGN.md
+
 # Runtime data
 pids
 *.pid

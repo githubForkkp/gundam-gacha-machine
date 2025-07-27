@@ -1367,11 +1367,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const today = new Date().toDateString();
 
         const shopHTML = `
-            <div class="mb-6 text-center">
-                <h3 class="text-xl font-bold mb-2">每日商店</h3>
-                <p class="text-sm text-gray-400">每日限购，午夜重置</p>
+            <div class="mb-4 sm:mb-6 text-center">
+                <h3 class="text-lg sm:text-xl font-bold mb-2">每日商店</h3>
+                <p class="text-xs sm:text-sm text-gray-400">每日限购，午夜重置</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 ${shopItems.map(item => {
                     const purchased = purchasedItems[item.id];
                     const todayPurchased = purchased && purchased.lastPurchase === today ? purchased.count : 0;
@@ -1379,18 +1379,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     const remaining = item.dailyLimit - todayPurchased;
 
                     return `
-                        <div class="pixel-box p-4 text-center ${canPurchase ? '' : 'opacity-50'}">
-                            <div class="text-4xl mb-2">${item.icon}</div>
-                            <h4 class="text-lg font-bold mb-2">${item.name}</h4>
-                            <p class="text-sm text-gray-300 mb-3">${item.description}</p>
-                            <div class="mb-3">
-                                <span class="text-yellow-400 font-bold">${item.price === 0 ? '免费' : item.price + ' 代币'}</span>
+                        <div class="pixel-box p-3 sm:p-4 text-center ${canPurchase ? '' : 'opacity-50'}">
+                            <div class="text-2xl sm:text-3xl md:text-4xl mb-2">${item.icon}</div>
+                            <h4 class="text-sm sm:text-base md:text-lg font-bold mb-2">${item.name}</h4>
+                            <p class="text-xs sm:text-sm text-gray-300 mb-2 sm:mb-3">${item.description}</p>
+                            <div class="mb-2 sm:mb-3">
+                                <span class="text-yellow-400 font-bold text-xs sm:text-sm">${item.price === 0 ? '免费' : item.price + ' 代币'}</span>
                             </div>
-                            <div class="mb-3 text-xs">
+                            <div class="mb-2 sm:mb-3 text-xs">
                                 <span class="text-blue-400">剩余: ${remaining}/${item.dailyLimit}</span>
                             </div>
                             <button
-                                class="pixel-button small-button ${canPurchase ? '' : 'opacity-50 cursor-not-allowed'}"
+                                class="pixel-button small-button w-full text-xs sm:text-sm ${canPurchase ? '' : 'opacity-50 cursor-not-allowed'}"
                                 onclick="purchaseItem('${item.id}')"
                                 ${canPurchase ? '' : 'disabled'}
                             >
@@ -1520,34 +1520,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const completionRate = Math.round((completedCount / totalCount) * 100);
 
         const achievementsHTML = `
-            <div class="mb-6 text-center">
-                <h3 class="text-xl font-bold mb-2">成就进度</h3>
-                <div class="flex justify-center space-x-4 text-sm">
+            <div class="mb-4 sm:mb-6 text-center">
+                <h3 class="text-lg sm:text-xl font-bold mb-2">成就进度</h3>
+                <div class="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
                     <span>已完成: ${completedCount}/${totalCount}</span>
                     <span>完成率: ${completionRate}%</span>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 ${achievements.map(achievement => {
                     const isCompleted = completedAchievements.includes(achievement.id);
                     const progress = achievement.condition(stats, collection);
 
                     return `
-                        <div class="pixel-box p-4 ${isCompleted ? 'bg-green-900 bg-opacity-30' : 'bg-gray-800 bg-opacity-30'}">
-                            <div class="flex items-center mb-3">
-                                <div class="text-3xl mr-3">${achievement.icon}</div>
-                                <div class="flex-1">
-                                    <h4 class="text-lg font-bold ${isCompleted ? 'text-green-400' : 'text-white'}">${achievement.name}</h4>
-                                    <p class="text-sm text-gray-300">${achievement.description}</p>
+                        <div class="pixel-box p-3 sm:p-4 ${isCompleted ? 'bg-green-900 bg-opacity-30' : 'bg-gray-800 bg-opacity-30'}">
+                            <div class="flex items-center mb-2 sm:mb-3">
+                                <div class="text-2xl sm:text-3xl mr-2 sm:mr-3">${achievement.icon}</div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm sm:text-base md:text-lg font-bold ${isCompleted ? 'text-green-400' : 'text-white'} truncate">${achievement.name}</h4>
+                                    <p class="text-xs sm:text-sm text-gray-300">${achievement.description}</p>
                                 </div>
-                                ${isCompleted ? '<div class="text-green-400 text-2xl">✓</div>' : ''}
+                                ${isCompleted ? '<div class="text-green-400 text-xl sm:text-2xl flex-shrink-0">✓</div>' : ''}
                             </div>
-                            <div class="text-sm">
+                            <div class="text-xs sm:text-sm">
                                 ${achievement.reward.tokens ? `<span class="text-yellow-400">奖励: ${achievement.reward.tokens} 代币</span>` : ''}
                             </div>
-                            ${isCompleted ? '<div class="text-green-400 text-sm mt-2">已完成</div>' :
-                              progress ? '<div class="text-blue-400 text-sm mt-2">可完成</div>' :
-                              '<div class="text-gray-500 text-sm mt-2">未完成</div>'}
+                            ${isCompleted ? '<div class="text-green-400 text-xs sm:text-sm mt-2">已完成</div>' :
+                              progress ? '<div class="text-blue-400 text-xs sm:text-sm mt-2">可完成</div>' :
+                              '<div class="text-gray-500 text-xs sm:text-sm mt-2">未完成</div>'}
                         </div>
                     `;
                 }).join('')}

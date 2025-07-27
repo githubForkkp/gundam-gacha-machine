@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高达扭蛋机 - 移动端测试</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white">
+    <div class="max-w-4xl mx-auto p-4">
+        <h1 class="text-2xl text-cyan-300 text-shadow mb-8 text-center">高达扭蛋机 - 响应式测试</h1>
+        
+        <!-- 屏幕尺寸指示器 -->
+        <div class="mb-8 p-4 pixel-box text-center">
+            <h2 class="text-lg mb-4">当前屏幕尺寸</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div class="block sm:hidden bg-red-600 p-2 rounded">
+                    <strong>XS</strong><br>
+                    &lt; 640px<br>
+                    小屏手机
+                </div>
+                <div class="hidden sm:block md:hidden bg-orange-600 p-2 rounded">
+                    <strong>SM</strong><br>
+                    640px - 768px<br>
+                    大屏手机
+                </div>
+                <div class="hidden md:block lg:hidden bg-yellow-600 p-2 rounded">
+                    <strong>MD</strong><br>
+                    768px - 1024px<br>
+                    平板设备
+                </div>
+                <div class="hidden lg:block bg-green-600 p-2 rounded">
+                    <strong>LG+</strong><br>
+                    &gt; 1024px<br>
+                    桌面设备
+                </div>
+            </div>
+        </div>
+
+        <!-- 按钮测试 -->
+        <div class="mb-8">
+            <h2 class="text-xl mb-4">按钮响应式测试</h2>
+            <div class="space-y-4">
+                <!-- 导航按钮 -->
+                <div class="pixel-box p-4">
+                    <h3 class="text-lg mb-3">导航按钮</h3>
+                    <div class="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
+                        <button class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">商店</button>
+                        <button class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">机库</button>
+                        <button class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">成就</button>
+                        <button class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">统计</button>
+                        <button class="pixel-button small-button flex-1 sm:flex-none min-w-[80px] text-xs sm:text-sm">设置</button>
+                    </div>
+                </div>
+
+                <!-- 主要操作按钮 -->
+                <div class="pixel-box p-4">
+                    <h3 class="text-lg mb-3">主要操作按钮</h3>
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 max-w-md mx-auto">
+                        <button class="pixel-button flex-1 py-3 sm:py-4 text-sm sm:text-base">
+                            <span class="cost text-xs sm:text-sm">[100]</span> 
+                            <span class="block sm:inline">单次抽取</span>
+                        </button>
+                        <button class="pixel-button flex-1 py-3 sm:py-4 text-sm sm:text-base">
+                            <span class="cost text-xs sm:text-sm">[1000]</span> 
+                            <span class="block sm:inline">十连抽取</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 网格布局测试 -->
+        <div class="mb-8">
+            <h2 class="text-xl mb-4">网格布局测试</h2>
+            
+            <!-- 商店网格 -->
+            <div class="pixel-box p-4 mb-4">
+                <h3 class="text-lg mb-3">商店网格 (1列 → 2列 → 3列)</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                    <div class="pixel-box p-3 sm:p-4 text-center">
+                        <div class="text-2xl sm:text-3xl md:text-4xl mb-2">💰</div>
+                        <h4 class="text-sm sm:text-base md:text-lg font-bold mb-2">代币包（小）</h4>
+                        <p class="text-xs sm:text-sm text-gray-300 mb-2 sm:mb-3">获得100代币</p>
+                        <button class="pixel-button small-button w-full text-xs sm:text-sm">购买</button>
+                    </div>
+                    <div class="pixel-box p-3 sm:p-4 text-center">
+                        <div class="text-2xl sm:text-3xl md:text-4xl mb-2">💎</div>
+                        <h4 class="text-sm sm:text-base md:text-lg font-bold mb-2">代币包（中）</h4>
+                        <p class="text-xs sm:text-sm text-gray-300 mb-2 sm:mb-3">获得500代币</p>
+                        <button class="pixel-button small-button w-full text-xs sm:text-sm">购买</button>
+                    </div>
+                    <div class="pixel-box p-3 sm:p-4 text-center">
+                        <div class="text-2xl sm:text-3xl md:text-4xl mb-2">🎫</div>
+                        <h4 class="text-sm sm:text-base md:text-lg font-bold mb-2">单抽折扣券</h4>
+                        <p class="text-xs sm:text-sm text-gray-300 mb-2 sm:mb-3">单次抽取只需50代币</p>
+                        <button class="pixel-button small-button w-full text-xs sm:text-sm">购买</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 机体网格 -->
+            <div class="pixel-box p-4">
+                <h3 class="text-lg mb-3">机体网格 (2列 → 3列 → 4列)</h3>
+                <div class="result-grid hangar-grid">
+                    <div class="item-card pixel-box p-2 sm:p-3 text-center">
+                        <img src="https://r2.flowith.net/files/o/1751696094800-rx-78-2_gundam_pixel_art_prize_pool_index_5@1024x1024.png" 
+                             alt="高达" class="mx-auto mb-2 pixel-art">
+                        <h3 class="font-bold mb-1">ν高达</h3>
+                        <p class="text-xs text-gray-400 mb-1">RX-93</p>
+                        <p class="text-xs">SSR</p>
+                    </div>
+                    <div class="item-card pixel-box p-2 sm:p-3 text-center">
+                        <img src="https://r2.flowith.net/files/o/1751696115609-pixel_art_sprite_for_strike_freedom_gundam_game_prize_pool_index_10@1024x1024.png" 
+                             alt="高达" class="mx-auto mb-2 pixel-art">
+                        <h3 class="font-bold mb-1">强袭自由</h3>
+                        <p class="text-xs text-gray-400 mb-1">ZGMF-X20A</p>
+                        <p class="text-xs">SSR</p>
+                    </div>
+                    <div class="item-card pixel-box p-2 sm:p-3 text-center">
+                        <img src="https://r2.flowith.net/files/o/1751696120089-pixel_art_char_zaku_ii_index_7@1024x1024.png" 
+                             alt="扎古" class="mx-auto mb-2 pixel-art">
+                        <h3 class="font-bold mb-1">夏亚扎古</h3>
+                        <p class="text-xs text-gray-400 mb-1">MS-06S</p>
+                        <p class="text-xs">SR</p>
+                    </div>
+                    <div class="item-card pixel-box p-2 sm:p-3 text-center">
+                        <img src="https://r2.flowith.net/files/o/1751696097527-pixel_art_gm_prize_pool_asset_index_3@1024x1024.png" 
+                             alt="吉姆" class="mx-auto mb-2 pixel-art">
+                        <h3 class="font-bold mb-1">吉姆</h3>
+                        <p class="text-xs text-gray-400 mb-1">RGM-79</p>
+                        <p class="text-xs">N</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模态框测试 -->
+        <div class="mb-8">
+            <h2 class="text-xl mb-4">模态框测试</h2>
+            <div class="pixel-box p-4">
+                <p class="mb-4">点击按钮测试模态框在不同屏幕尺寸下的表现：</p>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="showTestModal('small')" class="pixel-button small-button">小模态框</button>
+                    <button onclick="showTestModal('medium')" class="pixel-button small-button">中模态框</button>
+                    <button onclick="showTestModal('large')" class="pixel-button small-button">大模态框</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 测试模态框 -->
+        <div id="test-modal" class="modal-overlay" style="display: none;">
+            <div id="test-modal-content" class="modal-content pixel-box bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2">
+                <button onclick="hideTestModal()" class="modal-close-btn text-xl sm:text-2xl">&times;</button>
+                <div id="test-modal-body"></div>
+            </div>
+        </div>
+
+        <!-- 返回主游戏 -->
+        <div class="text-center">
+            <a href="index.html" class="pixel-button">返回主游戏</a>
+        </div>
+    </div>
+
+    <script>
+        function showTestModal(size) {
+            const modal = document.getElementById('test-modal');
+            const content = document.getElementById('test-modal-content');
+            const body = document.getElementById('test-modal-body');
+            
+            // 设置不同尺寸
+            switch(size) {
+                case 'small':
+                    content.className = 'modal-content pixel-box w-[95vw] sm:w-full max-w-md max-h-[90vh] bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2';
+                    body.innerHTML = '<h2 class="text-lg sm:text-xl mb-4">小模态框</h2><p>这是一个小尺寸的模态框，适合简单的确认对话框。</p>';
+                    break;
+                case 'medium':
+                    content.className = 'modal-content pixel-box w-[95vw] sm:w-full max-w-2xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2';
+                    body.innerHTML = '<h2 class="text-lg sm:text-xl mb-4">中模态框</h2><p class="mb-4">这是一个中等尺寸的模态框，适合表单和设置界面。</p><div class="space-y-2"><div class="flex justify-between"><span>设置项1</span><input type="checkbox" checked></div><div class="flex justify-between"><span>设置项2</span><input type="checkbox"></div></div>';
+                    break;
+                case 'large':
+                    content.className = 'modal-content pixel-box w-[95vw] sm:w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-3 sm:p-4 md:p-6 overflow-y-auto relative mx-2';
+                    body.innerHTML = '<h2 class="text-lg sm:text-xl mb-4">大模态框</h2><p class="mb-4">这是一个大尺寸的模态框，适合复杂的内容展示。</p><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">' + 
+                        Array.from({length: 6}, (_, i) => `<div class="pixel-box p-3 text-center"><div class="text-2xl mb-2">🤖</div><h3>机体 ${i+1}</h3><p class="text-sm text-gray-400">型号-${i+1}</p></div>`).join('') + 
+                        '</div>';
+                    break;
+            }
+            
+            modal.style.display = 'flex';
+        }
+        
+        function hideTestModal() {
+            document.getElementById('test-modal').style.display = 'none';
+        }
+        
+        // 点击模态框外部关闭
+        document.getElementById('test-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideTestModal();
+            }
+        });
+    </script>
+</body>
+</html>
