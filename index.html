@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高达扭蛋机</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white overflow-hidden">
+
+    <div id="app-container" class="relative w-full h-screen flex flex-col items-center justify-center p-4">
+        
+        <header class="absolute top-0 left-0 w-full flex justify-between items-center p-4 md:p-8 z-10">
+            <h1 class="text-xl md:text-3xl text-cyan-300 text-shadow">高达扭蛋机</h1>
+            <div class="flex items-center space-x-4">
+                <button id="shop-btn" class="pixel-button small-button">商店</button>
+                <button id="hangar-btn" class="pixel-button small-button">机库</button>
+                <button id="achievements-btn" class="pixel-button small-button">成就</button>
+                <button id="stats-btn" class="pixel-button small-button">统计</button>
+                <button id="settings-btn" class="pixel-button small-button">设置</button>
+                <div id="token-display" class="pixel-box text-lg md:text-2xl p-3 md:p-4 bg-black bg-opacity-50">
+                    代币: <span id="token-balance">1000</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex flex-col items-center justify-center">
+            <div id="gacha-machine" class="pixel-box p-4 mb-8">
+                 <img src="https://r2.flowith.net/files/o/1751696094800-rx-78-2_gundam_pixel_art_prize_pool_index_5@1024x1024.png" alt="Gacha Machine" class="w-64 h-64 md:w-80 md:h-80 object-contain pixel-art">
+            </div>
+
+            <div class="flex space-x-4">
+                <button id="single-pull-btn" class="pixel-button">
+                    <span class="cost">[100]</span> 单次抽取
+                </button>
+                <button id="ten-pull-btn" class="pixel-button">
+                    <span class="cost">[1000]</span> 十连抽取
+                </button>
+            </div>
+        </main>
+
+        <!-- Result Modal -->
+        <div id="result-modal" class="modal-overlay">
+            <div class="modal-content pixel-box w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
+                <button id="close-result-modal-btn" class="modal-close-btn">&times;</button>
+                <div id="modal-body" class="w-full h-full"></div>
+            </div>
+        </div>
+
+        <!-- Hangar Modal -->
+        <div id="hangar-modal" class="modal-overlay">
+             <div class="modal-content pixel-box w-full max-w-5xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
+                <button id="close-hangar-modal-btn" class="modal-close-btn">&times;</button>
+                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">个人机库</h2>
+                <div id="hangar-body" class="w-full h-full"></div>
+            </div>
+        </div>
+
+        <!-- Stats Modal -->
+        <div id="stats-modal" class="modal-overlay">
+            <div class="modal-content pixel-box w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
+                <button id="close-stats-modal-btn" class="modal-close-btn">&times;</button>
+                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">游戏统计</h2>
+                <div id="stats-body" class="w-full h-full"></div>
+            </div>
+        </div>
+
+        <!-- Shop Modal -->
+        <div id="shop-modal" class="modal-overlay">
+            <div class="modal-content pixel-box w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
+                <button id="close-shop-modal-btn" class="modal-close-btn">&times;</button>
+                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">高达商店</h2>
+                <div id="shop-body" class="w-full h-full"></div>
+            </div>
+        </div>
+
+        <!-- Achievements Modal -->
+        <div id="achievements-modal" class="modal-overlay">
+            <div class="modal-content pixel-box w-full max-w-4xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
+                <button id="close-achievements-modal-btn" class="modal-close-btn">&times;</button>
+                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">成就系统</h2>
+                <div id="achievements-body" class="w-full h-full"></div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="modal-overlay">
+            <div class="modal-content pixel-box w-full max-w-2xl max-h-[90vh] bg-gray-900 bg-opacity-80 p-6 overflow-y-auto relative">
+                <button id="close-settings-modal-btn" class="modal-close-btn">&times;</button>
+                <h2 class="text-2xl md:text-3xl text-cyan-300 text-shadow mb-6 text-center">游戏设置</h2>
+                <div id="settings-body" class="w-full h-full">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <label class="text-white">音效</label>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="sound-toggle" class="w-6 h-6" checked>
+                                <button id="test-sound-btn" class="pixel-button small-button">测试</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-white">背景音乐</label>
+                            <input type="checkbox" id="bgmusic-toggle" class="w-6 h-6" checked>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-white">动画效果</label>
+                            <input type="checkbox" id="animation-toggle" class="w-6 h-6" checked>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-white">每日签到提醒</label>
+                            <input type="checkbox" id="signin-toggle" class="w-6 h-6" checked>
+                        </div>
+                        <div class="pt-4">
+                            <button id="reset-data-btn" class="pixel-button bg-red-600 hover:bg-red-700">重置游戏数据</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>

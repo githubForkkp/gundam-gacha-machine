@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高达复杂背景音乐测试</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #00d4ff;
+            text-shadow: 0 0 10px #00d4ff;
+            margin-bottom: 30px;
+        }
+        .test-btn {
+            background: linear-gradient(45deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+        .test-btn:active {
+            transform: translateY(0);
+        }
+        .status {
+            margin: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .success { 
+            background: linear-gradient(45deg, #4caf50, #45a049);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        .error { 
+            background: linear-gradient(45deg, #f44336, #da190b);
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+        }
+        .info {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+        .music-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        .track-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .track {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .track h3 {
+            color: #00d4ff;
+            margin: 0 0 10px 0;
+        }
+        .track p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 高达复杂背景音乐测试</h1>
+        <div id="status" class="status info">音频测试页面已加载，点击按钮测试音效</div>
+        
+        <div class="music-info">
+            <h2>🎼 音乐系统说明</h2>
+            <p>这个复杂的背景音乐系统包含多个轨道，模拟真实的高达主题曲风格：</p>
+            
+            <div class="track-info">
+                <div class="track">
+                    <h3>🎹 主旋律</h3>
+                    <p>• 经典高达主题曲风格</p>
+                    <p>• 三段式结构</p>
+                    <p>• 延迟效果增强</p>
+                </div>
+                <div class="track">
+                    <h3>🎼 和声轨道</h3>
+                    <p>• 丰富的和弦进行</p>
+                    <p>• 三角波音色</p>
+                    <p>• 和声支撑</p>
+                </div>
+                <div class="track">
+                    <h3>🎸 低音轨道</h3>
+                    <p>• 复杂的低音线</p>
+                    <p>• 锯齿波音色</p>
+                    <p>• 低通滤波器</p>
+                </div>
+                <div class="track">
+                    <h3>🥁 鼓点轨道</h3>
+                    <p>• 底鼓和军鼓</p>
+                    <p>• 复杂节奏模式</p>
+                    <p>• 噪声合成</p>
+                </div>
+                <div class="track">
+                    <h3>⚙️ 机甲音效</h3>
+                    <p>• 伺服电机音效</p>
+                    <p>• 液压系统音效</p>
+                    <p>• 机械感增强</p>
+                </div>
+            </div>
+        </div>
+        
+        <button class="test-btn" onclick="testComplexBGM()">🎵 测试复杂背景音乐</button>
+        <button class="test-btn" onclick="testPullSound()">🎮 测试抽取音效</button>
+        <button class="test-btn" onclick="testRareSound()">⭐ 测试稀有音效</button>
+        <button class="test-btn" onclick="testSSRSound()">🌟 测试SSR音效</button>
+        <button class="test-btn" onclick="stopBGM()">⏹️ 停止背景音乐</button>
+    </div>
+
+    <script>
+        let audioContext = null;
+        let bgMusicEnabled = true;
+
+        function showStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+
+        function initAudioContext() {
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    showStatus('AudioContext初始化成功', 'success');
+                } catch (error) {
+                    showStatus('AudioContext初始化失败: ' + error.message, 'error');
+                }
+            }
+            return audioContext;
+        }
+
+        function testComplexBGM() {
+            showStatus('🎵 播放复杂背景音乐中...', 'info');
+            createComplexGundamBGM();
+        }
+
+        function createComplexGundamBGM() {
+            if (!bgMusicEnabled) return;
+            
+            try {
+                const ctx = initAudioContext();
+                if (!ctx) return;
+                
+                if (ctx.state === 'suspended') {
+                    ctx.resume();
+                }
+                
+                // 高达主题曲主旋律 - 更复杂的旋律线
+                const createMainMelody = () => {
+                    const melodyNotes = [
+                        // 第一段：经典高达主题
+                        { freq: 523.25, duration: 0.4, type: 'square' },   // C5
+                        { freq: 659.25, duration: 0.4, type: 'square' },   // E5
+                        { freq: 783.99, duration: 0.4, type: 'square' },   // G5
+                        { freq: 880.00, duration: 0.8, type: 'square' },   // A5
+                        { freq: 783.99, duration: 0.4, type: 'square' },   // G5
+                        { freq: 659.25, duration: 0.4, type: 'square' },   // E5
+                        { freq: 523.25, duration: 0.8, type: 'square' },   // C5
+                        
+                        // 第二段：上升旋律
+                        { freq: 659.25, duration: 0.3, type: 'square' },   // E5
+                        { freq: 783.99, duration: 0.3, type: 'square' },   // G5
+                        { freq: 880.00, duration: 0.3, type: 'square' },   // A5
+                        { freq: 1046.50, duration: 0.6, type: 'square' },  // C6
+                        { freq: 880.00, duration: 0.3, type: 'square' },   // A5
+                        { freq: 783.99, duration: 0.3, type: 'square' },   // G5
+                        { freq: 659.25, duration: 0.6, type: 'square' },   // E5
+                        
+                        // 第三段：高潮部分
+                        { freq: 1046.50, duration: 0.2, type: 'square' },  // C6
+                        { freq: 1174.66, duration: 0.2, type: 'square' },  // D6
+                        { freq: 1318.51, duration: 0.2, type: 'square' },  // E6
+                        { freq: 1396.91, duration: 0.4, type: 'square' },  // F6
+                        { freq: 1318.51, duration: 0.2, type: 'square' },  // E6
+                        { freq: 1174.66, duration: 0.2, type: 'square' },  // D6
+                        { freq: 1046.50, duration: 0.4, type: 'square' },  // C6
+                    ];
+                    
+                    let currentTime = 0;
+                    melodyNotes.forEach((note, index) => {
+                        setTimeout(() => {
+                            const osc = ctx.createOscillator();
+                            const gain = ctx.createGain();
+                            const filter = ctx.createBiquadFilter();
+                            const delay = ctx.createDelay();
+                            const feedback = ctx.createGain();
+                            
+                            // 创建延迟效果
+                            delay.delayTime.setValueAtTime(0.3, ctx.currentTime);
+                            feedback.gain.setValueAtTime(0.3, ctx.currentTime);
+                            
+                            osc.connect(filter);
+                            filter.connect(gain);
+                            gain.connect(delay);
+                            delay.connect(feedback);
+                            feedback.connect(delay);
+                            delay.connect(ctx.destination);
+                            gain.connect(ctx.destination);
+                            
+                            osc.frequency.setValueAtTime(note.freq, ctx.currentTime);
+                            osc.type = note.type;
+                            
+                            // 动态滤波器
+                            filter.type = 'lowpass';
+                            filter.frequency.setValueAtTime(2000 + note.freq * 0.5, ctx.currentTime);
+                            filter.Q.setValueAtTime(2, ctx.currentTime);
+                            
+                            // 音量包络
+                            gain.gain.setValueAtTime(0.015, ctx.currentTime);
+                            gain.gain.exponentialRampToValueAtTime(0.005, ctx.currentTime + note.duration);
+                            
+                            osc.start(ctx.currentTime);
+                            osc.stop(ctx.currentTime + note.duration);
+                        }, currentTime * 1000);
+                        currentTime += note.duration;
+                    });
+                };
+                
+                // 和声轨道 - 提供丰富的和声支持
+                const createHarmony = () => {
+                    const harmonyChords = [
+                        [261.63, 329.63, 392.00], // C4, E4, G4
+                        [293.66, 349.23, 440.00], // D4, F4, A4
+                        [329.63, 392.00, 493.88], // E4, G4, B4
+                        [261.63, 329.63, 392.00], // C4, E4, G4
+                    ];
+                    
+                    harmonyChords.forEach((chord, chordIndex) => {
+                        setTimeout(() => {
+                            chord.forEach((freq, freqIndex) => {
+                                const osc = ctx.createOscillator();
+                                const gain = ctx.createGain();
+                                const filter = ctx.createBiquadFilter();
+                                
+                                osc.connect(filter);
+                                filter.connect(gain);
+                                gain.connect(ctx.destination);
+                                
+                                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                                osc.type = 'triangle';
+                                
+                                filter.type = 'lowpass';
+                                filter.frequency.setValueAtTime(freq * 2, ctx.currentTime);
+                                filter.Q.setValueAtTime(1, ctx.currentTime);
+                                
+                                gain.gain.setValueAtTime(0.008, ctx.currentTime);
+                                gain.gain.exponentialRampToValueAtTime(0.002, ctx.currentTime + 1.6);
+                                
+                                osc.start(ctx.currentTime);
+                                osc.stop(ctx.currentTime + 1.6);
+                            });
+                        }, chordIndex * 1600);
+                    });
+                };
+                
+                // 低音轨道 - 更复杂的低音线
+                const createBass = () => {
+                    const bassLine = [
+                        { freq: 130.81, duration: 0.8 }, // C3
+                        { freq: 146.83, duration: 0.8 }, // D3
+                        { freq: 164.81, duration: 0.8 }, // E3
+                        { freq: 174.61, duration: 0.8 }, // F3
+                        { freq: 196.00, duration: 0.8 }, // G3
+                        { freq: 220.00, duration: 0.8 }, // A3
+                        { freq: 246.94, duration: 0.8 }, // B3
+                        { freq: 261.63, duration: 0.8 }, // C4
+                    ];
+                    
+                    let currentTime = 0;
+                    bassLine.forEach((note, index) => {
+                        setTimeout(() => {
+                            const osc = ctx.createOscillator();
+                            const gain = ctx.createGain();
+                            const filter = ctx.createBiquadFilter();
+                            
+                            osc.connect(filter);
+                            filter.connect(gain);
+                            gain.connect(ctx.destination);
+                            
+                            osc.frequency.setValueAtTime(note.freq, ctx.currentTime);
+                            osc.type = 'sawtooth';
+                            
+                            // 低通滤波器增强低音质感
+                            filter.type = 'lowpass';
+                            filter.frequency.setValueAtTime(note.freq * 3, ctx.currentTime);
+                            filter.Q.setValueAtTime(0.5, ctx.currentTime);
+                            
+                            gain.gain.setValueAtTime(0.02, ctx.currentTime);
+                            gain.gain.exponentialRampToValueAtTime(0.005, ctx.currentTime + note.duration);
+                            
+                            osc.start(ctx.currentTime);
+                            osc.stop(ctx.currentTime + note.duration);
+                        }, currentTime * 1000);
+                        currentTime += note.duration;
+                    });
+                };
+                
+                // 鼓点轨道 - 更复杂的节奏模式
+                const createDrums = () => {
+                    const drumPattern = [
+                        { time: 0, type: 'kick' },
+                        { time: 0.4, type: 'snare' },
+                        { time: 0.8, type: 'kick' },
+                        { time: 1.2, type: 'snare' },
+                        { time: 1.6, type: 'kick' },
+                        { time: 2.0, type: 'snare' },
+                        { time: 2.4, type: 'kick' },
+                        { time: 2.8, type: 'snare' },
+                        { time: 3.2, type: 'kick' },
+                        { time: 3.6, type: 'snare' },
+                        { time: 4.0, type: 'kick' },
+                        { time: 4.4, type: 'snare' },
+                        { time: 4.8, type: 'kick' },
+                        { time: 5.2, type: 'snare' },
+                        { time: 5.6, type: 'kick' },
+                        { time: 6.0, type: 'snare' },
+                        { time: 6.4, type: 'kick' },
+                        { time: 6.8, type: 'snare' },
+                    ];
+                    
+                    drumPattern.forEach((drum, index) => {
+                        setTimeout(() => {
+                            if (drum.type === 'kick') {
+                                // 底鼓
+                                const osc = ctx.createOscillator();
+                                const gain = ctx.createGain();
+                                
+                                osc.connect(gain);
+                                gain.connect(ctx.destination);
+                                
+                                osc.frequency.setValueAtTime(80, ctx.currentTime);
+                                osc.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + 0.1);
+                                osc.type = 'sine';
+                                
+                                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+                                
+                                osc.start(ctx.currentTime);
+                                osc.stop(ctx.currentTime + 0.1);
+                            } else if (drum.type === 'snare') {
+                                // 军鼓
+                                const osc = ctx.createOscillator();
+                                const gain = ctx.createGain();
+                                const noise = ctx.createOscillator();
+                                const noiseGain = ctx.createGain();
+                                
+                                osc.connect(gain);
+                                noise.connect(noiseGain);
+                                gain.connect(ctx.destination);
+                                noiseGain.connect(ctx.destination);
+                                
+                                osc.frequency.setValueAtTime(200, ctx.currentTime);
+                                osc.type = 'triangle';
+                                
+                                noise.frequency.setValueAtTime(1000, ctx.currentTime);
+                                noise.type = 'sawtooth';
+                                
+                                gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+                                
+                                noiseGain.gain.setValueAtTime(0.02, ctx.currentTime);
+                                noiseGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+                                
+                                osc.start(ctx.currentTime);
+                                osc.stop(ctx.currentTime + 0.1);
+                                noise.start(ctx.currentTime);
+                                noise.stop(ctx.currentTime + 0.1);
+                            }
+                        }, drum.time * 1000);
+                    });
+                };
+                
+                // 机甲音效轨道 - 添加高达特色的机械音效
+                const createMechSounds = () => {
+                    const mechEffects = [
+                        { time: 0.2, type: 'servo' },
+                        { time: 1.0, type: 'hydraulic' },
+                        { time: 2.2, type: 'servo' },
+                        { time: 3.0, type: 'hydraulic' },
+                        { time: 4.2, type: 'servo' },
+                        { time: 5.0, type: 'hydraulic' },
+                        { time: 6.2, type: 'servo' },
+                        { time: 7.0, type: 'hydraulic' },
+                    ];
+                    
+                    mechEffects.forEach((effect, index) => {
+                        setTimeout(() => {
+                            if (effect.type === 'servo') {
+                                // 伺服电机音效
+                                const osc = ctx.createOscillator();
+                                const gain = ctx.createGain();
+                                const filter = ctx.createBiquadFilter();
+                                
+                                osc.connect(filter);
+                                filter.connect(gain);
+                                gain.connect(ctx.destination);
+                                
+                                osc.frequency.setValueAtTime(800, ctx.currentTime);
+                                osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.2);
+                                osc.type = 'square';
+                                
+                                filter.type = 'bandpass';
+                                filter.frequency.setValueAtTime(600, ctx.currentTime);
+                                filter.Q.setValueAtTime(5, ctx.currentTime);
+                                
+                                gain.gain.setValueAtTime(0.01, ctx.currentTime);
+                                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+                                
+                                osc.start(ctx.currentTime);
+                                osc.stop(ctx.currentTime + 0.2);
+                            } else if (effect.type === 'hydraulic') {
+                                // 液压系统音效
+                                const osc = ctx.createOscillator();
+                                const gain = ctx.createGain();
+                                const filter = ctx.createBiquadFilter();
+                                
+                                osc.connect(filter);
+                                filter.connect(gain);
+                                gain.connect(ctx.destination);
+                                
+                                osc.frequency.setValueAtTime(120, ctx.currentTime);
+                                osc.frequency.exponentialRampToValueAtTime(60, ctx.currentTime + 0.3);
+                                osc.type = 'sawtooth';
+                                
+                                filter.type = 'lowpass';
+                                filter.frequency.setValueAtTime(200, ctx.currentTime);
+                                filter.Q.setValueAtTime(2, ctx.currentTime);
+                                
+                                gain.gain.setValueAtTime(0.015, ctx.currentTime);
+                                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+                                
+                                osc.start(ctx.currentTime);
+                                osc.stop(ctx.currentTime + 0.3);
+                            }
+                        }, effect.time * 1000);
+                    });
+                };
+                
+                // 播放所有轨道
+                createMainMelody();
+                setTimeout(createHarmony, 200);
+                setTimeout(createBass, 400);
+                setTimeout(createDrums, 600);
+                setTimeout(createMechSounds, 800);
+                
+                showStatus('🎵 复杂背景音乐播放中...', 'success');
+                
+            } catch (error) {
+                showStatus('背景音乐播放失败: ' + error.message, 'error');
+            }
+        }
+
+        function testPullSound() {
+            const ctx = initAudioContext();
+            if (!ctx) return;
+            
+            const oscillator = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+            const filter = ctx.createBiquadFilter();
+            
+            oscillator.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            
+            oscillator.frequency.setValueAtTime(200, ctx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.3);
+            oscillator.type = 'sawtooth';
+            
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(3000, ctx.currentTime);
+            
+            gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+            oscillator.start(ctx.currentTime);
+            oscillator.stop(ctx.currentTime + 0.3);
+            
+            showStatus('🎮 抽取音效播放完成', 'success');
+        }
+
+        function testRareSound() {
+            const ctx = initAudioContext();
+            if (!ctx) return;
+            
+            const frequencies = [523, 659, 784, 1047]; // C5, E5, G5, C6
+            frequencies.forEach((freq, index) => {
+                setTimeout(() => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    const filter = ctx.createBiquadFilter();
+                    
+                    osc.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                    osc.type = 'square';
+                    
+                    filter.type = 'bandpass';
+                    filter.frequency.setValueAtTime(freq, ctx.currentTime);
+                    filter.Q.setValueAtTime(10, ctx.currentTime);
+                    
+                    gain.gain.setValueAtTime(0.03, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+                    osc.start(ctx.currentTime + index * 0.05);
+                    osc.stop(ctx.currentTime + 0.4 + index * 0.05);
+                }, index * 50);
+            });
+            
+            showStatus('⭐ 稀有音效播放完成', 'success');
+        }
+
+        function testSSRSound() {
+            const ctx = initAudioContext();
+            if (!ctx) return;
+            
+            const epicFrequencies = [
+                [261.63, 523.25, 1046.50], // C4, C5, C6
+                [329.63, 659.25, 1318.51], // E4, E5, E6
+                [392.00, 783.99, 1567.98], // G4, G5, G6
+                [523.25, 1046.50, 2093.00]  // C5, C6, C7
+            ];
+            
+            epicFrequencies.forEach((chord, chordIndex) => {
+                setTimeout(() => {
+                    chord.forEach((freq, freqIndex) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const filter = ctx.createBiquadFilter();
+                        
+                        osc.connect(filter);
+                        filter.connect(gain);
+                        gain.connect(ctx.destination);
+                        
+                        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                        osc.type = 'triangle';
+                        
+                        filter.type = 'lowpass';
+                        filter.frequency.setValueAtTime(freq * 2, ctx.currentTime);
+                        
+                        gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+                        osc.start(ctx.currentTime);
+                        osc.stop(ctx.currentTime + 0.8);
+                    });
+                }, chordIndex * 200);
+            });
+            
+            showStatus('🌟 SSR音效播放完成', 'success');
+        }
+
+        function stopBGM() {
+            bgMusicEnabled = false;
+            showStatus('⏹️ 背景音乐已停止', 'info');
+        }
+
+        // 页面加载时初始化
+        window.addEventListener('load', () => {
+            showStatus('🎵 复杂音频测试页面已加载，点击按钮测试音效', 'info');
+        });
+    </script>
+</body>
+</html> 

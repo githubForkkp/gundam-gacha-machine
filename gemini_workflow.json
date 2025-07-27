@@ -1,0 +1,91 @@
+{
+  "name": "Gemini API Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "input",
+              "value": "Hello, how are you?"
+            }
+          ]
+        }
+      },
+      "id": "input-node",
+      "name": "Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp:generateContent",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-goog-api-key",
+              "value": "YOUR_API_KEY_HERE"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "contents",
+              "value": "={{ [{\"parts\": [{\"text\": $json.input}]}] }}"
+            }
+          ]
+        },
+        "options": {
+          "proxy": "http://127.0.0.1:7890"
+        }
+      },
+      "id": "gemini-request",
+      "name": "Gemini API Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// 解析 Gemini API 响应\nconst response = $input.first().json;\n\nif (response.candidates && response.candidates[0]) {\n  return {\n    text: response.candidates[0].content.parts[0].text,\n    fullResponse: response\n  };\n} else {\n  throw new Error('No response from Gemini API');\n}"
+      },
+      "id": "parse-response",
+      "name": "Parse Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    }
+  ],
+  "connections": {
+    "Input": {
+      "main": [
+        [
+          {
+            "node": "Gemini API Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini API Request": {
+      "main": [
+        [
+          {
+            "node": "Parse Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+} 

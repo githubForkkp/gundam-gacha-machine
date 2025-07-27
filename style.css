@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-image: url('https://r2.flowith.net/files/o/1751696096005-retro_futuristic_pixel_art_space_background_index_1@1024x1024.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+}
+
+.pixel-art {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.text-shadow {
+    text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.pixel-box {
+    border: 4px solid #fff;
+    box-shadow: 
+        inset 0 0 0 4px #5a5a5a,
+        6px 6px 0px 0px rgba(0,0,0,0.75);
+    background-color: #222;
+}
+
+.pixel-button {
+    background-color: #4a4a4a;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border: 4px solid #fff;
+    box-shadow: 
+        inset 0 0 0 4px #222,
+        6px 6px 0px 0px rgba(0,0,0,0.75);
+    text-shadow: 2px 2px 0 #000;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    position: relative;
+    user-select: none;
+}
+
+.pixel-button.small-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.pixel-button:hover {
+    background-color: #5a5a5a;
+    color: #0ff;
+}
+
+.pixel-button:active {
+    top: 4px;
+    left: 4px;
+    box-shadow: 
+        inset 0 0 0 4px #222,
+        2px 2px 0px 0px rgba(0,0,0,0.75);
+}
+
+.pixel-button .cost {
+    display: block;
+    font-size: 0.75rem;
+    color: #ffeb3b;
+    margin-bottom: 0.25rem;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-overlay.hide {
+    animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+.modal-content {
+    animation: slideIn 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-size: 2.5rem;
+    color: white;
+    cursor: pointer;
+    border: none;
+    background: none;
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    color: #0ff;
+}
+
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes slideIn {
+  0% { transform: translateY(100px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+  40%, 43% { transform: translate3d(0, -30px, 0); }
+  70% { transform: translate3d(0, -15px, 0); }
+  90% { transform: translate3d(0, -4px, 0); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s;
+}
+
+.glow-effect {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Result & Hangar Card Styles */
+.result-card, .hangar-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #fff;
+    box-shadow: inset 0 0 0 2px #5a5a5a;
+    position: relative;
+}
+
+.rarity-SSR { color: #ffd700; text-shadow: 0 0 5px #ffd700, 0 0 10px #ff0, 0 0 15px #ff0; }
+.rarity-SR { color: #ee82ee; text-shadow: 0 0 5px #ee82ee; }
+.rarity-R { color: #87ceeb; text-shadow: 0 0 5px #87ceeb; }
+.rarity-N { color: #d3d3d3; }
+
+.card-SSR { border-color: #ffd700; box-shadow: 0 0 15px #ffd700, inset 0 0 8px #ffd700; }
+.card-SR { border-color: #ee82ee; box-shadow: 0 0 10px #ee82ee, inset 0 0 6px #ee82ee; }
+.card-R { border-color: #87ceeb; box-shadow: 0 0 5px #87ceeb, inset 0 0 4px #87ceeb; }
+.card-N { border-color: #d3d3d3; box-shadow: inset 0 0 0 2px #5a5a5a; }
+
+.result-grid, .hangar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.hangar-card .count {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: #0ff;
+    color: #000;
+    font-size: 0.8rem;
+    padding: 0.1rem 0.5rem;
+    border: 2px solid #000;
+    min-width: 2rem;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .result-grid, .hangar-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+/* 设置界面样式 */
+input[type="checkbox"] {
+    appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid #fff;
+    background-color: #222;
+    position: relative;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 2px #5a5a5a;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #0ff;
+    box-shadow: inset 0 0 0 2px #0ff, 0 0 10px #0ff;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* 统计界面样式 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.stats-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #fff;
+    padding: 1rem;
+    box-shadow: inset 0 0 0 2px #5a5a5a;
+}
+
+.stats-card h3 {
+    color: #0ff;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 5px #0ff;
+}
+
+.stats-value {
+    font-weight: bold;
+    color: #ffeb3b;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "gundam-gacha-machine",
+  "version": "1.0.0",
+  "description": "高达主题扭蛋机游戏",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000",
+    "dev": "npx http-server . -p 3000",
+    "build": "echo '静态网站，无需构建'",
+    "deploy": "echo '请使用claw.cloud部署'"
+  },
+  "keywords": [
+    "gundam",
+    "gacha",
+    "game",
+    "html5",
+    "javascript",
+    "css3"
+  ],
+  "author": "kk",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+} 
