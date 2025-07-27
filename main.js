@@ -227,49 +227,55 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /**
-     * 创建高达风格的背景音乐
-     * 使用Web Audio API生成具有高达特色的复杂电子音乐
+     * 创建激情动感的高达经典背景音乐
+     * 基于《翔べ！ガンダム》(飞翔吧！高达) 的经典旋律
      */
     const createGundamBGM = () => {
         if (!bgMusicEnabled) return;
-        
+
         try {
             const ctx = initAudioContext();
             if (!ctx) return;
-            
+
             if (ctx.state === 'suspended') {
                 ctx.resume();
             }
-            
-            // 高达主题曲主旋律 - 更复杂的旋律线
+
+            // 主旋律 - 基于《翔べ！ガンダム》的激情旋律
             const createMainMelody = () => {
                 const melodyNotes = [
-                    // 第一段：经典高达主题
-                    { freq: 523.25, duration: 0.4, type: 'square' },   // C5
-                    { freq: 659.25, duration: 0.4, type: 'square' },   // E5
-                    { freq: 783.99, duration: 0.4, type: 'square' },   // G5
-                    { freq: 880.00, duration: 0.8, type: 'square' },   // A5
-                    { freq: 783.99, duration: 0.4, type: 'square' },   // G5
-                    { freq: 659.25, duration: 0.4, type: 'square' },   // E5
-                    { freq: 523.25, duration: 0.8, type: 'square' },   // C5
-                    
-                    // 第二段：上升旋律
-                    { freq: 659.25, duration: 0.3, type: 'square' },   // E5
-                    { freq: 783.99, duration: 0.3, type: 'square' },   // G5
-                    { freq: 880.00, duration: 0.3, type: 'square' },   // A5
-                    { freq: 1046.50, duration: 0.6, type: 'square' },  // C6
-                    { freq: 880.00, duration: 0.3, type: 'square' },   // A5
-                    { freq: 783.99, duration: 0.3, type: 'square' },   // G5
-                    { freq: 659.25, duration: 0.6, type: 'square' },   // E5
-                    
-                    // 第三段：高潮部分
-                    { freq: 1046.50, duration: 0.2, type: 'square' },  // C6
-                    { freq: 1174.66, duration: 0.2, type: 'square' },  // D6
-                    { freq: 1318.51, duration: 0.2, type: 'square' },  // E6
-                    { freq: 1396.91, duration: 0.4, type: 'square' },  // F6
-                    { freq: 1318.51, duration: 0.2, type: 'square' },  // E6
-                    { freq: 1174.66, duration: 0.2, type: 'square' },  // D6
-                    { freq: 1046.50, duration: 0.4, type: 'square' },  // C6
+                    // 开场：激昂的上升旋律 "燃え上がれ〜"
+                    { freq: 440.00, duration: 0.3, type: 'sawtooth', volume: 0.02 },   // A4
+                    { freq: 493.88, duration: 0.3, type: 'sawtooth', volume: 0.025 },  // B4
+                    { freq: 523.25, duration: 0.4, type: 'sawtooth', volume: 0.03 },   // C5
+                    { freq: 587.33, duration: 0.4, type: 'sawtooth', volume: 0.035 },  // D5
+                    { freq: 659.25, duration: 0.6, type: 'sawtooth', volume: 0.04 },   // E5
+
+                    // 第一段主题："ガンダム〜"
+                    { freq: 783.99, duration: 0.4, type: 'sawtooth', volume: 0.045 },  // G5
+                    { freq: 880.00, duration: 0.4, type: 'sawtooth', volume: 0.05 },   // A5
+                    { freq: 987.77, duration: 0.6, type: 'sawtooth', volume: 0.055 },  // B5
+                    { freq: 1046.50, duration: 0.8, type: 'sawtooth', volume: 0.06 },  // C6
+
+                    // 激情高潮："君よ走れ〜"
+                    { freq: 1174.66, duration: 0.3, type: 'sawtooth', volume: 0.065 }, // D6
+                    { freq: 1318.51, duration: 0.3, type: 'sawtooth', volume: 0.07 },  // E6
+                    { freq: 1396.91, duration: 0.4, type: 'sawtooth', volume: 0.075 }, // F6
+                    { freq: 1567.98, duration: 0.6, type: 'sawtooth', volume: 0.08 },  // G6
+                    { freq: 1760.00, duration: 0.8, type: 'sawtooth', volume: 0.085 }, // A6
+
+                    // 回落与重复："立て！立て！立て！"
+                    { freq: 1318.51, duration: 0.2, type: 'sawtooth', volume: 0.06 },  // E6
+                    { freq: 1174.66, duration: 0.2, type: 'sawtooth', volume: 0.055 }, // D6
+                    { freq: 1046.50, duration: 0.2, type: 'sawtooth', volume: 0.05 },  // C6
+                    { freq: 987.77, duration: 0.3, type: 'sawtooth', volume: 0.045 },  // B5
+                    { freq: 880.00, duration: 0.4, type: 'sawtooth', volume: 0.04 },   // A5
+
+                    // 结尾的英雄气概
+                    { freq: 1046.50, duration: 0.4, type: 'sawtooth', volume: 0.05 },  // C6
+                    { freq: 1318.51, duration: 0.4, type: 'sawtooth', volume: 0.06 },  // E6
+                    { freq: 1567.98, duration: 0.6, type: 'sawtooth', volume: 0.07 },  // G6
+                    { freq: 2093.00, duration: 1.0, type: 'sawtooth', volume: 0.08 },  // C7
                 ];
                 
                 let currentTime = 0;
@@ -301,9 +307,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         filter.frequency.setValueAtTime(2000 + note.freq * 0.5, ctx.currentTime);
                         filter.Q.setValueAtTime(2, ctx.currentTime);
                         
-                        // 音量包络
-                        gain.gain.setValueAtTime(0.015, ctx.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.005, ctx.currentTime + note.duration);
+                        // 动态音量包络 - 使用note.volume参数
+                        gain.gain.setValueAtTime(0, ctx.currentTime);
+                        gain.gain.linearRampToValueAtTime(note.volume, ctx.currentTime + 0.02);
+                        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + note.duration);
                         
                         osc.start(ctx.currentTime);
                         osc.stop(ctx.currentTime + note.duration);
@@ -312,36 +319,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             };
             
-            // 和声轨道 - 提供丰富的和声支持
+            // 激情和声轨道 - 模拟管弦乐团的宏大感
             const createHarmony = () => {
                 const harmonyChords = [
-                    [261.63, 329.63, 392.00], // C4, E4, G4
-                    [293.66, 349.23, 440.00], // D4, F4, A4
-                    [329.63, 392.00, 493.88], // E4, G4, B4
-                    [261.63, 329.63, 392.00], // C4, E4, G4
+                    [261.63, 329.63, 392.00, 523.25], // C大调七和弦 - 雄壮开场
+                    [293.66, 369.99, 440.00, 587.33], // D小调七和弦 - 深沉力量
+                    [329.63, 415.30, 493.88, 659.25], // E小调七和弦 - 英雄气概
+                    [392.00, 493.88, 587.33, 783.99], // G大调七和弦 - 胜利凯歌
                 ];
                 
                 harmonyChords.forEach((chord, chordIndex) => {
                     setTimeout(() => {
-                        chord.forEach((freq, freqIndex) => {
+                        chord.forEach((freq) => {
                             const osc = ctx.createOscillator();
                             const gain = ctx.createGain();
                             const filter = ctx.createBiquadFilter();
-                            
+                            const compressor = ctx.createDynamicsCompressor();
+
+                            // 创建更丰富的音色链
                             osc.connect(filter);
-                            filter.connect(gain);
+                            filter.connect(compressor);
+                            compressor.connect(gain);
                             gain.connect(ctx.destination);
-                            
+
                             osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                            osc.type = 'triangle';
-                            
+                            osc.type = 'sawtooth'; // 使用锯齿波获得更厚重的音色
+
+                            // 动态滤波器模拟弦乐的表现力
                             filter.type = 'lowpass';
-                            filter.frequency.setValueAtTime(freq * 2, ctx.currentTime);
-                            filter.Q.setValueAtTime(1, ctx.currentTime);
-                            
-                            gain.gain.setValueAtTime(0.008, ctx.currentTime);
-                            gain.gain.exponentialRampToValueAtTime(0.002, ctx.currentTime + 1.6);
-                            
+                            filter.frequency.setValueAtTime(freq * 1.5, ctx.currentTime);
+                            filter.frequency.exponentialRampToValueAtTime(freq * 3, ctx.currentTime + 0.4);
+                            filter.frequency.exponentialRampToValueAtTime(freq * 1.2, ctx.currentTime + 1.6);
+                            filter.Q.setValueAtTime(1.8, ctx.currentTime);
+
+                            // 压缩器设置增加冲击力
+                            compressor.threshold.setValueAtTime(-20, ctx.currentTime);
+                            compressor.knee.setValueAtTime(25, ctx.currentTime);
+                            compressor.ratio.setValueAtTime(8, ctx.currentTime);
+
+                            // 渐强的音量包络
+                            const baseVolume = 0.012 + (chordIndex * 0.003); // 逐渐增强
+                            gain.gain.setValueAtTime(0, ctx.currentTime);
+                            gain.gain.linearRampToValueAtTime(baseVolume, ctx.currentTime + 0.1);
+                            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.6);
+
                             osc.start(ctx.currentTime);
                             osc.stop(ctx.currentTime + 1.6);
                         });
@@ -349,17 +370,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             };
             
-            // 低音轨道 - 更复杂的低音线
+            // 强力低音轨道 - 提供震撼的节奏基础
             const createBass = () => {
                 const bassLine = [
-                    { freq: 130.81, duration: 0.8 }, // C3
-                    { freq: 146.83, duration: 0.8 }, // D3
-                    { freq: 164.81, duration: 0.8 }, // E3
-                    { freq: 174.61, duration: 0.8 }, // F3
-                    { freq: 196.00, duration: 0.8 }, // G3
-                    { freq: 220.00, duration: 0.8 }, // A3
-                    { freq: 246.94, duration: 0.8 }, // B3
-                    { freq: 261.63, duration: 0.8 }, // C4
+                    { freq: 65.41, duration: 0.8, volume: 0.08 },  // C2 - 深沉开场
+                    { freq: 73.42, duration: 0.8, volume: 0.075 }, // D2
+                    { freq: 82.41, duration: 0.8, volume: 0.08 },  // E2
+                    { freq: 87.31, duration: 0.8, volume: 0.085 }, // F2 - 强力支撑
+                    { freq: 98.00, duration: 0.8, volume: 0.09 },  // G2
+                    { freq: 110.00, duration: 0.8, volume: 0.095 }, // A2
+                    { freq: 123.47, duration: 0.8, volume: 0.1 },  // B2
+                    { freq: 130.81, duration: 0.8, volume: 0.105 }, // C3 - 高潮
                 ];
                 
                 let currentTime = 0;
@@ -381,8 +402,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         filter.frequency.setValueAtTime(note.freq * 3, ctx.currentTime);
                         filter.Q.setValueAtTime(0.5, ctx.currentTime);
                         
-                        gain.gain.setValueAtTime(0.02, ctx.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.005, ctx.currentTime + note.duration);
+                        // 使用note.volume参数
+                        gain.gain.setValueAtTime(0, ctx.currentTime);
+                        gain.gain.linearRampToValueAtTime(note.volume, ctx.currentTime + 0.05);
+                        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + note.duration);
                         
                         osc.start(ctx.currentTime);
                         osc.stop(ctx.currentTime + note.duration);
@@ -591,84 +614,149 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (type === 'pull') {
-                // 抽取音效 - 高达启动音效风格
+                // 抽取音效 - 高达光束剑启动音效风格
                 const oscillator = ctx.createOscillator();
                 const gainNode = ctx.createGain();
                 const filter = ctx.createBiquadFilter();
-                
-                oscillator.connect(filter);
+                const distortion = ctx.createWaveShaper();
+
+                // 创建轻微失真效果模拟能量充电声
+                const makeDistortionCurve = (amount) => {
+                    const samples = 44100;
+                    const curve = new Float32Array(samples);
+                    for (let i = 0; i < samples; i++) {
+                        const x = (i * 2) / samples - 1;
+                        curve[i] = ((3 + amount) * x * 20) / (Math.PI + amount * Math.abs(x));
+                    }
+                    return curve;
+                };
+
+                distortion.curve = makeDistortionCurve(0.8);
+                distortion.oversample = '2x';
+
+                oscillator.connect(distortion);
+                distortion.connect(filter);
                 filter.connect(gainNode);
                 gainNode.connect(ctx.destination);
-                
-                oscillator.frequency.setValueAtTime(200, ctx.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.3);
+
                 oscillator.type = 'sawtooth';
-                
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(3000, ctx.currentTime);
-                
-                gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                // 模拟光束剑的"嗡嗡"声 - 从低频到高频再回落
+                oscillator.frequency.setValueAtTime(150, ctx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.15);
+                oscillator.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.4);
+
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(800, ctx.currentTime);
+                filter.frequency.exponentialRampToValueAtTime(2500, ctx.currentTime + 0.2);
+                filter.Q.setValueAtTime(3, ctx.currentTime);
+
+                gainNode.gain.setValueAtTime(0, ctx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 0.05);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
                 oscillator.start(ctx.currentTime);
-                oscillator.stop(ctx.currentTime + 0.3);
+                oscillator.stop(ctx.currentTime + 0.4);
                 
             } else if (type === 'rare') {
-                // 稀有物品音效 - 高达警报音效风格
-                const frequencies = [523, 659, 784, 1047]; // C5, E5, G5, C6
+                // 稀有物品音效 - 高达雷达锁定/警报音效风格
+                const frequencies = [440, 554, 659, 880, 1109]; // A4, C#5, E5, A5, C#6 - 和谐的五度音程
                 frequencies.forEach((freq, index) => {
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
                     const filter = ctx.createBiquadFilter();
-                    
+                    const delay = ctx.createDelay();
+                    const feedback = ctx.createGain();
+
+                    // 创建回声效果模拟雷达扫描
+                    delay.delayTime.setValueAtTime(0.15, ctx.currentTime);
+                    feedback.gain.setValueAtTime(0.4, ctx.currentTime);
+
                     osc.connect(filter);
                     filter.connect(gain);
+                    gain.connect(delay);
+                    delay.connect(feedback);
+                    feedback.connect(delay);
+                    delay.connect(ctx.destination);
                     gain.connect(ctx.destination);
-                    
+
                     osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                    osc.type = 'square';
-                    
+                    osc.type = 'square'; // 使用方波模拟电子警报声
+
+                    // 动态滤波器模拟雷达扫描效果
                     filter.type = 'bandpass';
-                    filter.frequency.setValueAtTime(freq, ctx.currentTime);
-                    filter.Q.setValueAtTime(10, ctx.currentTime);
-                    
-                    gain.gain.setValueAtTime(0.03, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-                    osc.start(ctx.currentTime + index * 0.05);
-                    osc.stop(ctx.currentTime + 0.4 + index * 0.05);
+                    filter.frequency.setValueAtTime(freq * 0.8, ctx.currentTime);
+                    filter.frequency.exponentialRampToValueAtTime(freq * 2.5, ctx.currentTime + 0.3);
+                    filter.Q.setValueAtTime(6, ctx.currentTime);
+
+                    // 脉冲式音量包络
+                    const baseVolume = 0.05 + (index * 0.008);
+                    gain.gain.setValueAtTime(0, ctx.currentTime);
+                    gain.gain.linearRampToValueAtTime(baseVolume, ctx.currentTime + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+
+                    osc.start(ctx.currentTime + index * 0.08);
+                    osc.stop(ctx.currentTime + 0.5 + index * 0.08);
                 });
                 
             } else if (type === 'ssr') {
-                // SSR物品音效 - 史诗级高达音效
+                // SSR物品音效 - 史诗级高达主题音效（模拟《翔べ！ガンダム》高潮部分）
                 const epicFrequencies = [
-                    [261.63, 523.25, 1046.50], // C4, C5, C6
-                    [329.63, 659.25, 1318.51], // E4, E5, E6
-                    [392.00, 783.99, 1567.98], // G4, G5, G6
-                    [523.25, 1046.50, 2093.00]  // C5, C6, C7
+                    [261.63, 523.25, 1046.50, 2093.00], // C大调八度和弦 - 雄壮开场
+                    [329.63, 659.25, 1318.51, 2637.02], // E大调八度和弦 - 英雄气概
+                    [392.00, 783.99, 1567.98, 3135.96], // G大调八度和弦 - 胜利凯歌
+                    [523.25, 1046.50, 2093.00, 4186.01] // C大调高八度 - 史诗终章
                 ];
                 
                 epicFrequencies.forEach((chord, chordIndex) => {
                     setTimeout(() => {
-                        chord.forEach((freq, freqIndex) => {
+                        chord.forEach((freq) => {
                             const osc = ctx.createOscillator();
                             const gain = ctx.createGain();
                             const filter = ctx.createBiquadFilter();
-                            
+                            const delay = ctx.createDelay();
+                            const feedback = ctx.createGain();
+                            const compressor = ctx.createDynamicsCompressor();
+
+                            // 创建延迟效果增加史诗感
+                            delay.delayTime.setValueAtTime(0.25, ctx.currentTime);
+                            feedback.gain.setValueAtTime(0.4, ctx.currentTime);
+
+                            // 音频链：振荡器 -> 滤波器 -> 压缩器 -> 延迟 -> 增益
                             osc.connect(filter);
-                            filter.connect(gain);
+                            filter.connect(compressor);
+                            compressor.connect(delay);
+                            delay.connect(feedback);
+                            feedback.connect(delay);
+                            delay.connect(gain);
                             gain.connect(ctx.destination);
-                            
+
+                            // 直接信号也连接到输出
+                            compressor.connect(gain);
+
                             osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                            osc.type = 'triangle';
-                            
+                            osc.type = 'sawtooth'; // 使用锯齿波获得丰富的泛音
+
+                            // 动态滤波器模拟管弦乐的表现力
                             filter.type = 'lowpass';
-                            filter.frequency.setValueAtTime(freq * 2, ctx.currentTime);
-                            
-                            gain.gain.setValueAtTime(0.04, ctx.currentTime);
-                            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+                            filter.frequency.setValueAtTime(freq * 1.5, ctx.currentTime);
+                            filter.frequency.exponentialRampToValueAtTime(freq * 6, ctx.currentTime + 0.3);
+                            filter.frequency.exponentialRampToValueAtTime(freq * 2, ctx.currentTime + 1.0);
+                            filter.Q.setValueAtTime(2, ctx.currentTime);
+
+                            // 压缩器设置增加冲击力
+                            compressor.threshold.setValueAtTime(-12, ctx.currentTime);
+                            compressor.knee.setValueAtTime(30, ctx.currentTime);
+                            compressor.ratio.setValueAtTime(12, ctx.currentTime);
+
+                            // 史诗级音量包络
+                            const baseVolume = 0.08 + (chordIndex * 0.015); // 逐渐增强到高潮
+                            gain.gain.setValueAtTime(0, ctx.currentTime);
+                            gain.gain.linearRampToValueAtTime(baseVolume, ctx.currentTime + 0.1);
+                            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+
                             osc.start(ctx.currentTime);
-                            osc.stop(ctx.currentTime + 0.8);
+                            osc.stop(ctx.currentTime + 1.2);
                         });
-                    }, chordIndex * 200);
+                    }, chordIndex * 300); // 延长间隔增加史诗感
                 });
             }
         } catch (error) {
